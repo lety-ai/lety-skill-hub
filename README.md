@@ -4,10 +4,20 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 
 ## Plugins
 
-| Plugin | Skills | Description |
-|--------|--------|-------------|
-| `linear` | `linear-task`, `linear-report` | Linear issue management & weekly reports |
-| `dev` | `pr-develop`, `pr-staging`, `pr-production` | GitFlow PRs for all environments |
+| Plugin | Description |
+|--------|-------------|
+| `linear-task` | Create Linear issues with user story, Gherkin acceptance criteria, and Definition of Done |
+| `linear-report` | Generate weekly activity reports from Linear grouped by project, milestone, and contributor |
+| `pr-develop` | Create a PR from a feature/fix/chore branch to develop following GitFlow and Conventional Commits |
+| `pr-staging` | Cut a release branch, bump version to RC, and create a PR to staging following GitFlow and semver |
+| `pr-production` | Strip RC suffix and create a PR from staging to master for production release following GitFlow |
+| `typeorm` | TypeORM best practices for NestJS + DataSource (0.3.x): no raw SQL, Repository/QueryBuilder only, migrations via CLI |
+| `nest-module` | Scaffold a complete NestJS module: entity, DTOs, module, gRPC controller, service, unit test, and mock factory |
+| `entity-dto` | Generate a TypeORM entity + Create/Update DTOs following official best practices — flags existing code issues |
+| `gateway-controller` | Scaffold a complete API Gateway feature: proto files, REST controller, gRPC service, and NestJS module |
+| `test-scaffold` | Generate unit tests for NestJS services — minimal mocks, `getRepositoryToken`, gRPC status code assertions |
+| `migration-helper` | Guide TypeORM migration workflow — generate, review, run, revert across tenant/platform/auth schemas |
+| `error-handler` | Write, review or fix error handling — BaseRpcException, TypeORM filters, RpcToHttpInterceptor, RMQ ack/nack |
 
 ## Install via Claude Code
 
@@ -24,11 +34,18 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 
 **3. Use the skills:**
 ```
-/linear:linear-task
-/linear:linear-report
-/dev:pr-develop
-/dev:pr-staging
-/dev:pr-production
+/linear-task
+/linear-report
+/pr-develop
+/pr-staging
+/pr-production
+/typeorm
+/nest-module
+/entity-dto
+/gateway-controller
+/test-scaffold
+/migration-helper
+/error-handler
 ```
 
 ---
@@ -40,25 +57,12 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
   marketplace.json          # Marketplace manifest (lists all plugins)
 
 plugins/
-  linear/                   # Plugin: linear
+  <plugin-name>/
     .claude-plugin/
       plugin.json           # Plugin manifest
     skills/
-      linear-task/
-        SKILL.md
-      linear-report/
-        SKILL.md
-
-  dev/                      # Plugin: dev
-    .claude-plugin/
-      plugin.json
-    skills/
-      pr-develop/
-        SKILL.md
-      pr-staging/
-        SKILL.md
-      pr-production/
-        SKILL.md
+      <plugin-name>/
+        SKILL.md            # Skill prompt content
 ```
 
 ## How to contribute a plugin
