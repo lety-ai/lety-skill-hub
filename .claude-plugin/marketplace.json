@@ -40,6 +40,11 @@
       "name": "nest-module",
       "description": "Scaffold a complete NestJS module for Lety 2.0 Backend: entity, DTOs, module, gRPC controller, service with BaseRpcException, unit test and mock factory",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/nest-module" }
+    },
+    {
+      "name": "entity-dto",
+      "description": "Generate a TypeORM entity + Create/Update DTOs for Lety 2.0 Backend following official best practices — flags existing code issues",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/entity-dto" }
     }
   ]
 }

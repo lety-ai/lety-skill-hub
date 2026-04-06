@@ -1,0 +1,8 @@
+{
+  "name": "entity-dto",
+  "description": "Generate a TypeORM entity (extending BaseEntity), Create DTO, and Update DTO for Lety 2.0 Backend following official best practices — flags issues in existing code",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["typeorm", "nestjs", "entity", "dto", "swagger", "class-validator", "generator"],
+  "skills": "./skills"
+}
