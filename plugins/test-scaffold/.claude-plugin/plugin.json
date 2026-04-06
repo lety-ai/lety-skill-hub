@@ -1,0 +1,8 @@
+{
+  "name": "test-scaffold",
+  "description": "Generate unit tests for NestJS services — minimal mocks, getRepositoryToken, mock factory with EntityLike type, gRPC status code assertions",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["jest", "testing", "nestjs", "typeorm", "mocks", "unit-test", "lety"],
+  "skills": "./skills"
+}
