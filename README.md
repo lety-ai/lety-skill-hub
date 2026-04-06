@@ -32,13 +32,13 @@ skills/
 
 ## Skill categories
 
-| Category | Description |
-|----------|-------------|
-| `dev` | Development workflows (code review, refactoring, testing) |
-| `data` | Data processing and analysis |
-| `ops` | DevOps, deployments, infrastructure |
-| `docs` | Documentation generation |
-| `general` | General purpose utilities |
+| Category | Skills | Description |
+|----------|--------|-------------|
+| [`dev`](./skills/dev/) | pr-develop, pr-staging, pr-production | Git, PRs, releases (GitFlow) |
+| `data` | — | Data processing and analysis |
+| `ops` | — | DevOps, deployments, infrastructure |
+| `docs` | — | Documentation generation |
+| `general` | — | General purpose utilities |
 
 ## Templates
 

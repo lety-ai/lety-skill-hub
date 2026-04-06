@@ -1,9 +1,6 @@
 ---
 name: skill-name
 description: One-line description of what this skill does. Used by Claude to decide when to trigger it.
-version: 1.0.0
-author: your-github-username
-category: dev|data|ops|docs|general
 ---
 
 Write the full skill prompt here.
