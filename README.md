@@ -27,6 +27,7 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 | `casl` | Add or review CASL permission checks — usePermissionsStore, haveSomePermission, route and component-level guards |
 | `websocket` | Scaffold NestJS WebSocket gateway with Socket.io, JWT auth guard, tenant room isolation, RabbitMQ broadcast, and Next.js client hook |
 | `design-patterns` | Review and refactor code using design patterns — detect duplication, god services, mixed concerns; apply Strategy, Facade, Observer, Container/Presenter, Custom Hook patterns |
+| `pr-review` | Review a PR for Lety 2.0 — auto-detects backend/frontend changes, dispatches specialist reviewers in parallel, produces tiered Critical/Important/Suggestion report |
 
 ## Install via Claude Code
 
@@ -64,6 +65,7 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 /casl
 /websocket
 /design-patterns
+/pr-review
 ```
 
 ---

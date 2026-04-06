@@ -110,6 +110,11 @@
       "name": "design-patterns",
       "description": "Review and refactor code using design patterns — detect duplication, god services, and mixed concerns; apply Strategy, Factory, Decorator, Facade, Observer, Container/Presenter, and Custom Hook patterns",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/design-patterns" }
+    },
+    {
+      "name": "pr-review",
+      "description": "Review a pull request for Lety 2.0 — detects backend/frontend changes, dispatches specialist reviewers in parallel, and produces a tiered Critical/Important/Suggestion report covering conventions, error handling, security, TypeORM, CASL permissions, and state management",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-review" }
     }
   ]
 }
