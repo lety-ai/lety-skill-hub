@@ -17,11 +17,25 @@ skills/
       example/        # Optional: sample input/output files
 ```
 
-## How to use a skill
+## How to install a skill
 
-1. Browse the [`skills/`](./skills/) directory
-2. Copy the `skill.md` file to `~/.claude/skills/<skill-name>.md`
-3. Use it in Claude Code with `/<skill-name>`
+**List all available skills:**
+```bash
+./install.sh
+```
+
+**Install one or more skills:**
+```bash
+./install.sh linear-task
+./install.sh linear-task linear-report pr-develop
+```
+
+**Install everything:**
+```bash
+./install.sh --all
+```
+
+Skills are installed to `~/.claude/skills/`. Use them in Claude Code with `/<skill-name>`.
 
 ## How to contribute a skill
 
