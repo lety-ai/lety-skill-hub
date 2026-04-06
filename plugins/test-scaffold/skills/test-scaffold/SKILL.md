@@ -1,11 +1,11 @@
 ---
 name: test-scaffold
-description: Generate unit tests for NestJS services in Lety 2.0 Backend — minimal mocks, getRepositoryToken, mock factory, gRPC status code assertions. Triggered when the user wants to write or improve unit tests for a service.
+description: Generate unit tests for Lety 2.0 — NestJS services, RabbitMQ consumers, gRPC controllers, React custom hooks, Zustand stores, and Zod schemas. Triggered when the user wants to write, improve, or review tests for any backend service or frontend hook/store. Also use it when the user says "write tests for X", "cover this with tests", or "my tests are failing".
 ---
 
-You are writing unit tests for a **NestJS service** in the Lety 2.0 Backend using **Jest + @nestjs/testing**.
+You are writing tests for the **Lety 2.0** monorepo (NestJS + TypeORM + gRPC + RabbitMQ on backend; Next.js 15 + React + Zustand + TanStack Query on frontend).
 
-> **Priority rule**: Follow Jest and NestJS testing best practices. If existing tests in the project deviate, generate the correct version and flag the issue.
+> **Priority rule**: Follow Jest/NestJS/RTL best practices. If existing tests deviate, generate the correct version and flag the issue. Never copy broken patterns from the codebase — generate the correct version.
 
 ---
 
@@ -13,69 +13,83 @@ You are writing unit tests for a **NestJS service** in the Lety 2.0 Backend usin
 
 - **NestJS Testing**: https://docs.nestjs.com/fundamentals/testing
 - **Jest docs**: https://jestjs.io/docs/getting-started
-- **Jest mock functions**: https://jestjs.io/docs/mock-function-api
-- **TypeORM testing (getRepositoryToken)**: https://docs.nestjs.com/techniques/database#testing
+- **TypeORM testing**: https://docs.nestjs.com/techniques/database#testing
+- **Testing Library (React)**: https://testing-library.com/docs/react-testing-library/intro/
+- **Vitest** (if frontend uses Vitest instead of Jest): https://vitest.dev/guide/
 
 ---
 
-## STEP 1 — Read the service to test
+## STEP 1 — Identify what to test
 
-Before generating anything, read the service file the user provides (or asks you to test). Identify:
+Determine the target from what the user provides:
 
-- All injected dependencies (`@InjectRepository`, other services, `DataSource`, `CACHE_MANAGER`, gRPC clients, etc.)
-- All public methods
+| Target | Go to |
+|---|---|
+| NestJS service (`*.service.ts`) | STEP 2 → STEP 5 (this file) |
+| RabbitMQ consumer (`*.consumer.ts`) | STEP 2 → then read `references/rmq-and-advanced.md` |
+| Service with transactions / QueryBuilder | STEP 2 → then read `references/rmq-and-advanced.md` |
+| React custom hook (`use-*.ts`) | Read `references/frontend-tests.md` |
+| Zustand store (`*-store.ts`) | Read `references/frontend-tests.md` |
+| Zod schema (`*.schema.ts`) | Read `references/frontend-tests.md` |
+| gRPC controller (`*.controller.ts`) | STEP 2 → STEP 5 (treat like a service with thin delegation) |
+
+If the user hasn't provided the source file, ask for it. Never invent method signatures or field names.
+
+---
+
+## STEP 2 — Read the service under test
+
+Read the file carefully and extract:
+
+- All **injected dependencies** (`@InjectRepository`, other services, `DataSource`, `CACHE_MANAGER`, gRPC clients, `RequestContextService`)
+- All **public methods** — return type and params for each
 - Which methods throw `BaseRpcException` with which `status.*` code
 - Which methods call `toResponseDto()` on entities
-- Which methods use transactions (`QueryRunner` or `dataSource.transaction()`)
-- Which methods use `RequestContextService` / `ctxService`
+- Which methods use `dataSource.transaction()` or `QueryRunner`
+- Which methods use `QueryBuilder` (`createQueryBuilder()`)
+- Which methods call other services
 
----
-
-## STEP 2 — Gather test specification
-
-Ask the user which methods to test (or default to all public methods). For each method, plan:
-- Happy path (returns expected value)
-- Not found path (throws `NOT_FOUND` if applicable)
-- Permission denied path (throws `PERMISSION_DENIED` if applicable)
-- Already exists path (throws `ALREADY_EXISTS` if applicable)
-- Any domain-specific edge cases from the service logic
+Plan the test cases for each method before writing a line of code.
 
 ---
 
 ## STEP 3 — Generate the mock factory
 
-### File: `apps/api/test/mocks/<domainPlural>-mocks.ts`
+### File: `apps/<service>/test/mocks/<domainPlural>-mocks.ts`
 
 Rules:
-- Export a `<Domain>EntityLike` type — mirrors only the fields actually used in tests
-- Export a `make<Domain>Entity(partial?)` factory — builds a minimal valid entity
+- Export a `<Domain>EntityLike` type with only the fields used in tests
+- Export a `make<Domain>Entity(partial?)` factory
 - `id` defaults to `randomUUID()`
-- Required string fields default to a readable placeholder: `` `<Domain> ${id.slice(0, 8)}` ``
-- Include `toResponseDto()` that returns a plain object with the same fields
-- For Decimal fields: default to `new Decimal(0)` or a sensible value
-- For boolean fields: default to `true` for active/enabled flags
-- Keep it minimal — only fields the tests actually reference
+- `toResponseDto()` must be included — return a plain object with the same fields
+- Add `Decimal` fields with `new Decimal('0')` default, not raw numbers
+- Never use `as any` inside the factory — keep it fully typed
 
 ```typescript
 import { randomUUID } from 'crypto';
+import Decimal from 'decimal.js';
 
-export type <Domain>EntityLike = {
+export type LeadEntityLike = {
   id: string;
-  name: string;               // add fields used in tests
+  name: string;
+  email: string;
   isActive: boolean;
-  toResponseDto: () => Record<string, unknown>;
+  score: Decimal;
+  toResponseDto: () => { id: string; name: string; email: string; score: string };
 };
 
-export function make<Domain>Entity(
-  partial: Partial<<Domain>EntityLike> = {},
-): <Domain>EntityLike {
+export function makeLeadEntity(partial: Partial<LeadEntityLike> = {}): LeadEntityLike {
   const id = partial.id ?? randomUUID();
-  const name = partial.name ?? `<Domain> ${id.slice(0, 8)}`;
+  const name = partial.name ?? `Lead ${id.slice(0, 8)}`;
+  const email = partial.email ?? `${id.slice(0, 8)}@test.com`;
+  const score = partial.score ?? new Decimal('0');
   return {
     id,
     name,
+    email,
     isActive: partial.isActive ?? true,
-    toResponseDto: () => ({ id, name }),
+    score,
+    toResponseDto: () => ({ id, name, email, score: score.toFixed(2) }),
     ...partial,
   };
 }
@@ -83,118 +97,100 @@ export function make<Domain>Entity(
 
 ---
 
-## STEP 4 — Generate the spec file
+## STEP 4 — Plan test cases per method
 
-### File: `apps/api/src/<domainPlural>/<domainPlural>.service.spec.ts`
+For each public method, plan these scenarios before writing code:
 
-### Rules
+| Method type | Required scenarios |
+|---|---|
+| `findById` / `findOne` | ✅ found → returns entity; ❌ not found → `NOT_FOUND` |
+| `findAll` / `search` | ✅ returns paginated list; ✅ empty list |
+| `create` | ✅ saves and returns; ❌ duplicate → `ALREADY_EXISTS` |
+| `update` | ✅ finds + updates + returns; ❌ not found → `NOT_FOUND` |
+| `remove` | ✅ soft deletes; ❌ not found → `NOT_FOUND` |
+| Permission-gated method | ❌ no permission → `PERMISSION_DENIED` |
+| Business-rule method | ❌ rule violated → `FAILED_PRECONDITION` |
 
-**Test module setup:**
-- Use `Test.createTestingModule({ providers: [...] }).compile()`
-- Mock ONLY the direct dependencies of the service — do not mock transitive deps
-- Repository mock: declare typed object with only the methods used in the service
-  ```typescript
-  let repo: { findOneBy: jest.Mock; save: jest.Mock; softDelete: jest.Mock };
-  repo = { findOneBy: jest.fn(), save: jest.fn(), softDelete: jest.fn() };
-  { provide: getRepositoryToken(Entity), useValue: repo }
-  ```
-- Service mock: `{ provide: OtherService, useValue: {} }` for unused services; `{ provide: OtherService, useValue: { method: jest.fn() } }` for used ones
-- `RequestContextService`: `{ provide: RequestContextService, useValue: { getRequestUser: jest.fn(), getRequest: jest.fn() } }`
-- `DataSource`: `{ provide: DataSource, useValue: { createQueryRunner: jest.fn(), transaction: jest.fn() } }`
-- `CACHE_MANAGER`: `{ provide: CACHE_MANAGER, useValue: { get: jest.fn(), set: jest.fn(), del: jest.fn() } }`
-- gRPC client token: `{ provide: SERVICE_NAME, useValue: { getService: () => ({}) } }`
-- Rebuild module in `beforeEach` — never share state between tests
+---
 
-**Assertions:**
-- Happy path: `await expect(service.method(args)).resolves.toBe(entity)` or `.resolves.toEqual(dto)`
-  - Use `.toBe()` for same object reference, `.toEqual()` for deep equality
-- Not found: 
-  ```typescript
-  await expect(service.findById({ id })).rejects.toEqual(
-    new RpcException({ code: status.NOT_FOUND, message: `<Domain> with id: ${id} not found.` }),
-  );
-  ```
-- Verify mock was called:
-  ```typescript
-  expect(repo.findOneBy).toHaveBeenCalledWith({ id: entity.id });
-  expect(repo.findOneBy).toHaveBeenCalledTimes(1);
-  ```
-- `toResponseDto()` delegation:
-  ```typescript
-  const dto = entity.toResponseDto();
-  repo.findOneBy.mockResolvedValue(entity);
-  await expect(service.findOne({ id: entity.id })).resolves.toEqual(dto);
-  ```
+## STEP 5 — Generate the spec file
 
-**Test organization:**
-- Top-level `describe('<Domain>Service')` for the file
-- Nested `describe('methodName')` for each method
-- One `it()` per scenario — descriptive: `'should return entity when found'`, `'should throw NOT_FOUND when entity does not exist'`
-- `beforeEach` at the top level for module setup
+### File: `apps/<service>/src/<domainPlural>/<domainPlural>.service.spec.ts`
 
-**What NOT to test:**
-- Don't test NestJS framework behavior (DI, decorators)
-- Don't test TypeORM internals
-- Don't test private methods directly — test via public API
-- Don't mock implementations — mock return values only
+### Module setup
 
-**Template for a complete spec:**
+Declare mocks **before** `beforeEach` with their full type. Never use `Object.assign` inside tests to add missed mock methods — add them to the type and initializer.
 
 ```typescript
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { randomUUID } from 'crypto';
 import { status } from '@grpc/grpc-js';
-import { RpcException } from '@nestjs/microservices';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { <Domain>Entity } from '@app/common/entities/tenant/<domainPlural>/<tableName>.entity';
+import { LeadEntity } from '@app/common/entities/tenant/leads/lead.entity';
 import { RequestContextService } from '../request-context/request-context.service';
-import { <Domain>Service } from './<domainPlural>.service';
-import { make<Domain>Entity } from '../../test/mocks/<domainPlural>-mocks';
-// import other dependencies used in service...
+import { LeadsService } from './leads.service';
+import { makeLeadEntity } from '../../test/mocks/leads-mocks';
+import { BaseRpcException } from '@app/common/exceptions'; // ← always BaseRpcException
 
-describe('<Domain>Service', () => {
-  let service: <Domain>Service;
+describe('LeadsService', () => {
+  let service: LeadsService;
   let repo: {
+    findOne: jest.Mock;
     findOneBy: jest.Mock;
+    find: jest.Mock;
     save: jest.Mock;
+    create: jest.Mock;
     softDelete: jest.Mock;
-    // add other repo methods used
+    // Add only methods the service actually calls
   };
-  let ctxService: { getRequestUser: jest.Mock };
+  let ctxService: {
+    getRequestUser: jest.Mock;
+    getRequest: jest.Mock;
+  };
 
   beforeEach(async () => {
+    // Initialize ALL mock methods here — never add them mid-test
     repo = {
+      findOne: jest.fn(),
       findOneBy: jest.fn(),
+      find: jest.fn(),
       save: jest.fn(),
+      create: jest.fn(),
       softDelete: jest.fn(),
     };
-    ctxService = { getRequestUser: jest.fn() };
+    ctxService = {
+      getRequestUser: jest.fn().mockReturnValue({ id: randomUUID(), tenantId: randomUUID() }),
+      getRequest: jest.fn(),
+    };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        <Domain>Service,
-        { provide: getRepositoryToken(<Domain>Entity), useValue: repo },
+        LeadsService,
+        { provide: getRepositoryToken(LeadEntity), useValue: repo },
         { provide: RequestContextService, useValue: ctxService },
-        { provide: DataSource, useValue: {} },
-        // add other providers...
+        // { provide: DataSource, useValue: { createQueryRunner: jest.fn(), transaction: jest.fn() } },
+        // { provide: CACHE_MANAGER, useValue: { get: jest.fn(), set: jest.fn(), del: jest.fn() } },
+        // { provide: OTHER_SERVICE, useValue: { method: jest.fn() } }, // only methods actually called
       ],
     }).compile();
 
-    service = module.get<<Domain>Service>(<Domain>Service);
+    service = module.get<LeadsService>(LeadsService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
+  // ─── findById ────────────────────────────────────────────────────────────
+
   describe('findById', () => {
-    it('should return entity when found', async () => {
-      const entity = make<Domain>Entity();
+    it('should return the entity when found', async () => {
+      const entity = makeLeadEntity();
       repo.findOneBy.mockResolvedValue(entity);
 
       await expect(service.findById({ id: entity.id })).resolves.toBe(entity);
       expect(repo.findOneBy).toHaveBeenCalledWith({ id: entity.id });
+      expect(repo.findOneBy).toHaveBeenCalledTimes(1);
     });
 
     it('should throw NOT_FOUND when entity does not exist', async () => {
@@ -202,56 +198,125 @@ describe('<Domain>Service', () => {
       repo.findOneBy.mockResolvedValue(null);
 
       await expect(service.findById({ id })).rejects.toEqual(
-        new RpcException({
-          code: status.NOT_FOUND,
-          message: `<Domain> with id: ${id} not found.`,
-        }),
+        new BaseRpcException({ code: status.NOT_FOUND, message: `Lead with id: ${id} not found.` }),
       );
+      expect(repo.findOneBy).toHaveBeenCalledWith({ id });
     });
   });
 
+  // ─── findOne (returns DTO) ────────────────────────────────────────────────
+
   describe('findOne', () => {
     it('should return toResponseDto() result', async () => {
-      const entity = make<Domain>Entity();
+      const entity = makeLeadEntity();
       repo.findOneBy.mockResolvedValue(entity);
 
+      // Use toEqual (deep equality) when comparing DTOs — not toBe (reference)
       await expect(service.findOne({ id: entity.id })).resolves.toEqual(entity.toResponseDto());
     });
   });
 
+  // ─── create ──────────────────────────────────────────────────────────────
+
   describe('create', () => {
-    it('should save and return new entity', async () => {
-      const entity = make<Domain>Entity();
-      repo.save.mockResolvedValue(entity);
-      jest.spyOn(repo, 'save').mockResolvedValue(entity);
+    it('should save and return the new entity', async () => {
+      const entity = makeLeadEntity();
+      repo.create.mockReturnValue(entity);   // create() is synchronous
+      repo.save.mockResolvedValue(entity);   // save() is async
 
-      // mock repo.create if service calls it:
-      Object.assign(repo, { create: jest.fn().mockReturnValue(entity) });
+      const result = await service.create({ name: entity.name, email: entity.email });
 
-      const result = await service.create({ name: entity.name });
-      expect(result).toBe(entity);
-      expect(repo.save).toHaveBeenCalled();
+      expect(result).toBe(entity);           // same reference — service returns what save() returns
+      expect(repo.create).toHaveBeenCalledWith(expect.objectContaining({ name: entity.name }));
+      expect(repo.save).toHaveBeenCalledWith(entity);
+    });
+
+    it('should throw ALREADY_EXISTS on duplicate unique field', async () => {
+      const { QueryFailedError } = await import('typeorm');
+      const dbError = new QueryFailedError('', [], new Error());
+      (dbError as any).code = '23505'; // PostgreSQL unique violation
+      repo.save.mockRejectedValue(dbError);
+      repo.create.mockReturnValue(makeLeadEntity());
+
+      await expect(service.create({ name: 'duplicate', email: 'dupe@test.com' })).rejects.toEqual(
+        new BaseRpcException({ code: status.ALREADY_EXISTS, message: expect.stringContaining('already exists') }),
+      );
     });
   });
 
-  describe('remove', () => {
-    it('should soft delete entity', async () => {
-      const entity = make<Domain>Entity();
+  // ─── update ──────────────────────────────────────────────────────────────
+
+  describe('update', () => {
+    it('should find, update fields, save, and return entity', async () => {
+      const entity = makeLeadEntity();
+      const updated = makeLeadEntity({ id: entity.id, name: 'Updated Name' });
       repo.findOneBy.mockResolvedValue(entity);
-      repo.softDelete.mockResolvedValue(undefined);
+      repo.save.mockResolvedValue(updated);
+
+      const result = await service.update({ id: entity.id, name: 'Updated Name' });
+
+      expect(result).toBe(updated);
+      expect(repo.findOneBy).toHaveBeenCalledWith({ id: entity.id });
+      expect(repo.save).toHaveBeenCalled();
+    });
+
+    it('should throw NOT_FOUND when entity does not exist', async () => {
+      const id = randomUUID();
+      repo.findOneBy.mockResolvedValue(null);
+
+      await expect(service.update({ id, name: 'x' })).rejects.toEqual(
+        new BaseRpcException({ code: status.NOT_FOUND, message: `Lead with id: ${id} not found.` }),
+      );
+      expect(repo.save).not.toHaveBeenCalled();
+    });
+  });
+
+  // ─── remove ──────────────────────────────────────────────────────────────
+
+  describe('remove', () => {
+    it('should soft delete when entity exists', async () => {
+      const entity = makeLeadEntity();
+      repo.findOneBy.mockResolvedValue(entity);
+      repo.softDelete.mockResolvedValue({ affected: 1 });
 
       await expect(service.remove({ id: entity.id })).resolves.toBeUndefined();
       expect(repo.softDelete).toHaveBeenCalledWith({ id: entity.id });
     });
 
-    it('should throw NOT_FOUND if entity does not exist', async () => {
+    it('should throw NOT_FOUND without deleting when entity does not exist', async () => {
       const id = randomUUID();
       repo.findOneBy.mockResolvedValue(null);
 
       await expect(service.remove({ id })).rejects.toEqual(
-        new RpcException({ code: status.NOT_FOUND, message: `<Domain> with id: ${id} not found.` }),
+        new BaseRpcException({ code: status.NOT_FOUND, message: `Lead with id: ${id} not found.` }),
       );
       expect(repo.softDelete).not.toHaveBeenCalled();
+    });
+  });
+
+  // ─── permission-gated method ──────────────────────────────────────────────
+
+  describe('sensitiveAction', () => {
+    it('should throw PERMISSION_DENIED when user lacks permission', async () => {
+      const entity = makeLeadEntity();
+      ctxService.getRequestUser.mockReturnValue({ id: randomUUID(), role: 'viewer' }); // low-privilege user
+
+      await expect(service.sensitiveAction({ id: entity.id })).rejects.toEqual(
+        new BaseRpcException({ code: status.PERMISSION_DENIED, message: expect.any(String) }),
+      );
+    });
+  });
+
+  // ─── business rule method ─────────────────────────────────────────────────
+
+  describe('activateLead', () => {
+    it('should throw FAILED_PRECONDITION when lead is already active', async () => {
+      const entity = makeLeadEntity({ isActive: true });
+      repo.findOneBy.mockResolvedValue(entity);
+
+      await expect(service.activateLead({ id: entity.id })).rejects.toEqual(
+        new BaseRpcException({ code: status.FAILED_PRECONDITION, message: expect.stringContaining('already active') }),
+      );
     });
   });
 });
@@ -259,38 +324,46 @@ describe('<Domain>Service', () => {
 
 ---
 
-## STEP 5 — Flag issues in existing tests
+## STEP 6 — Review existing tests for anti-patterns
 
-If the user shares existing tests, review for:
+If the user shares existing tests, flag these:
 
-| Issue | What to tell the user |
+| Anti-pattern | Correction |
 |---|---|
-| Mocking entire service instead of just methods used | "Mock only what is called — `useValue: {}` for unused deps, `useValue: { method: jest.fn() }` for used ones" |
-| `toPromise()` instead of `lastValueFrom()` | "Use `lastValueFrom()` — `.toPromise()` is deprecated in RxJS 8" |
-| Assertions on `rejects.toThrow()` for gRPC errors | "Use `rejects.toEqual(new RpcException({...}))` — `toThrow` doesn't deep-compare error payload" |
-| `beforeAll` for module setup | "Use `beforeEach` — shared state between tests causes flaky failures" |
-| Testing private methods directly via `service['_private']` | "Test behavior via public API instead" |
-| Missing `expect(mock).toHaveBeenCalledWith(...)` | "Add call assertions — resolves/rejects alone don't verify correct arguments were passed" |
-| `synchronize: true` in test DB config | "Use in-memory/test DB or mocks — never sync against a real DB in unit tests" |
+| `new RpcException({...})` in assertions | Use `new BaseRpcException({...})` — that's what the service throws |
+| `rejects.toThrow(...)` for gRPC errors | Use `rejects.toEqual(new BaseRpcException({...}))` — `toThrow` doesn't deep-compare the code |
+| `jest.spyOn(repo, 'method').mockResolvedValue(...)` on an already-mocked object | Remove the spy — set the mock in `beforeEach` directly |
+| `Object.assign(repo, { create: jest.fn() })` inside a test | Declare `create` in the repo type and initialize it in `beforeEach` |
+| `beforeAll` for module setup | Use `beforeEach` — shared state causes flaky tests |
+| `toHaveBeenCalled()` without `toHaveBeenCalledWith(...)` | Always assert the arguments, not just the call count |
+| Empty `useValue: {}` for a service that actually calls methods on the dep | Mock only the methods called: `useValue: { method: jest.fn() }` |
+| Testing private methods via `service['_method']()` | Test via public API only |
+| `resolves.toBe()` for DTO comparison | Use `resolves.toEqual()` for deep equality; `toBe` is for same-reference checks |
 
 ---
 
-## STEP 6 — Show draft and confirm
+## Advanced patterns
 
-Present both files. Ask:
+For these scenarios, read the relevant reference file before generating:
 
-> "¿Todo correcto? ¿Quieres ajustar algún caso de prueba?"
-
-Wait for confirmation, then write files.
+- **RabbitMQ consumer tests** (`@EventPattern` handlers, ack/nack verification) → `references/rmq-and-advanced.md`
+- **Transaction tests** (`dataSource.transaction()` or `QueryRunner`) → `references/rmq-and-advanced.md`
+- **QueryBuilder tests** (`createQueryBuilder()`) → `references/rmq-and-advanced.md`
+- **Service calling other services** (multi-dependency mocking) → `references/rmq-and-advanced.md`
+- **React custom hook tests** (`renderHook`) → `references/frontend-tests.md`
+- **Zustand store tests** → `references/frontend-tests.md`
+- **Zod schema tests** → `references/frontend-tests.md`
+- **TanStack Query hook tests** → `references/frontend-tests.md`
 
 ---
 
 ## ABSOLUTE RULES
 
-- Mock only direct dependencies — never deep/transitive mocks
-- `beforeEach` for module — never `beforeAll`
-- Error assertions: `rejects.toEqual(new RpcException({...}))` — not `toThrow()`
-- One scenario per `it()` — no multi-assertion tests unless logically inseparable
-- Verify mock calls after behavior assertions
-- Never import real DB connections in unit tests
-- `make<Domain>Entity()` factory must implement `toResponseDto()` 
+- **Always `BaseRpcException`** — never `RpcException` or any HTTP exception in service tests
+- **Always `beforeEach`** for module setup — never `beforeAll`
+- **Declare all mock methods in the type** — never `Object.assign` inside tests
+- **`rejects.toEqual(new BaseRpcException({...}))`** — never `rejects.toThrow()`
+- **One scenario per `it()`** — no multi-behavior tests
+- **Assert mock arguments** with `toHaveBeenCalledWith()` after behavior assertions
+- **`toBe`** for same-object reference; **`toEqual`** for DTOs and plain objects
+- Never import real DB connections, external services, or Redis in unit tests
