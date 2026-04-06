@@ -1,0 +1,8 @@
+{
+  "name": "pr-staging",
+  "description": "Cut a release branch, bump version to RC, and create a PR to staging following GitFlow and semver",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["git", "github", "gitflow", "pr", "staging", "release", "semver"],
+  "skills": "./skills"
+}

@@ -7,14 +7,29 @@
   },
   "plugins": [
     {
-      "name": "linear",
-      "description": "Linear issue management: create tasks with user story format and generate weekly reports",
-      "source": { "source": "github", "repo": "lety-ai/claude-skills", "path": "plugins/linear" }
+      "name": "linear-task",
+      "description": "Create Linear issues with user story, Gherkin acceptance criteria, and Definition of Done",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/linear-task" }
     },
     {
-      "name": "dev",
-      "description": "Git & GitHub workflows: GitFlow PRs for develop, staging, and production",
-      "source": { "source": "github", "repo": "lety-ai/claude-skills", "path": "plugins/dev" }
+      "name": "linear-report",
+      "description": "Generate weekly activity reports from Linear grouped by project, milestone, and contributor",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/linear-report" }
+    },
+    {
+      "name": "pr-develop",
+      "description": "Create a PR from a feature/fix/chore branch to develop following GitFlow and Conventional Commits",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-develop" }
+    },
+    {
+      "name": "pr-staging",
+      "description": "Cut a release branch, bump version to RC, and create a PR to staging following GitFlow and semver",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-staging" }
+    },
+    {
+      "name": "pr-production",
+      "description": "Strip RC suffix and create a PR from staging to master for production release following GitFlow",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-production" }
     }
   ]
 }
