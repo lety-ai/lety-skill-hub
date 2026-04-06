@@ -1,8 +1,0 @@
-{
-  "name": "fe-zustand-store",
-  "description": "Scaffold Zustand v5 stores for Lety 2.0 Frontend — persisted stores with partialize/onRehydrateStorage and non-persisted UI stores following project patterns",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["zustand", "state-management", "react", "nextjs", "typescript", "lety"],
-  "skills": "./skills"
-}

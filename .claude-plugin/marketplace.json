@@ -72,34 +72,34 @@
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/security-review" }
     },
     {
-      "name": "fe-feature-module",
-      "description": "Scaffold a complete Lety 2.0 Frontend feature module following Screaming Architecture + Atomic Design: components, views, services, model, and logic folders",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-feature-module" }
+      "name": "nextjs-feature",
+      "description": "Scaffold a complete Next.js feature module following Screaming Architecture + Atomic Design: components, views, services, model, and logic folders",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/nextjs-feature" }
     },
     {
-      "name": "fe-service-hook",
-      "description": "Generate TanStack Query v5 useQuery/useMutation hooks for Lety 2.0 Frontend using the ApiSDK pattern with correct queryKey, error handling, and cache invalidation",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-service-hook" }
+      "name": "react-query",
+      "description": "Generate TanStack Query v5 useQuery/useMutation hooks with ApiSDK pattern, correct queryKey conventions, error handling, and cache invalidation",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/react-query" }
     },
     {
-      "name": "fe-zod-form",
-      "description": "Generate Zod schemas and react-hook-form setup for Lety 2.0 Frontend — single and multi-step forms with standardSchemaResolver and partial step validation",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-zod-form" }
+      "name": "zod-form",
+      "description": "Generate Zod schemas and react-hook-form setup — single and multi-step forms with standardSchemaResolver and partial step validation",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/zod-form" }
     },
     {
-      "name": "fe-zustand-store",
-      "description": "Scaffold Zustand v5 stores for Lety 2.0 Frontend — persisted stores with partialize/onRehydrateStorage and non-persisted UI stores",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-zustand-store" }
+      "name": "zustand",
+      "description": "Scaffold Zustand v5 stores — persisted stores with partialize/onRehydrateStorage, non-persisted UI stores, and wizard stores",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/zustand" }
     },
     {
-      "name": "fe-component",
-      "description": "Create React components for Lety 2.0 Frontend following Atomic Design — shared/ui atoms with CVA+cn()+Radix UI, or feature-specific components",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-component" }
+      "name": "ui-component",
+      "description": "Create React components following Atomic Design — base atoms with CVA+cn()+Radix UI, composite shared components, or feature-specific components",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/ui-component" }
     },
     {
-      "name": "fe-permissions",
-      "description": "Add or review CASL permission checks in Lety 2.0 Frontend — usePermissionsStore, haveSomePermission, conditional rendering, and sidebar route protection",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-permissions" }
+      "name": "casl",
+      "description": "Add or review CASL permission checks — usePermissionsStore, haveSomePermission, conditional rendering, and route-level protection",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/casl" }
     }
   ]
 }

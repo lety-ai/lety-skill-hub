@@ -1,5 +1,5 @@
 ---
-name: fe-feature-module
+name: nextjs-feature
 description: Scaffold a complete Lety 2.0 Frontend feature module following Screaming Architecture + Atomic Design. Triggered when the user wants to create a new feature, page, or domain module in the frontend.
 ---
 

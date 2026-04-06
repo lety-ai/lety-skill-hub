@@ -19,12 +19,12 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 | `migration-helper` | Guide TypeORM migration workflow — generate, review, run, revert across tenant/platform/auth schemas |
 | `error-handler` | Write, review or fix error handling — BaseRpcException, TypeORM filters, RpcToHttpInterceptor, RMQ ack/nack |
 | `security-review` | Review JWT strategies, auth guards, middleware, and security config — flags vulnerabilities against NestJS docs and OWASP |
-| `fe-feature-module` | Scaffold a complete frontend feature module: components, views, services, model, and logic following Screaming Architecture |
-| `fe-service-hook` | Generate TanStack Query v5 useQuery/useMutation hooks with ApiSDK pattern, queryKey conventions, and cache invalidation |
-| `fe-zod-form` | Generate Zod schemas + react-hook-form setup — single and multi-step forms with standardSchemaResolver |
-| `fe-zustand-store` | Scaffold Zustand v5 stores — persisted with partialize/onRehydrateStorage, UI stores, and wizard stores |
-| `fe-component` | Create React components following Atomic Design — atoms with CVA+cn()+Radix UI or feature-specific components |
-| `fe-permissions` | Add or review CASL permission checks — usePermissionsStore, haveSomePermission, route and component-level guards |
+| `nextjs-feature` | Scaffold a complete Next.js feature module: components, views, services, model, and logic following Screaming Architecture |
+| `react-query` | Generate TanStack Query v5 useQuery/useMutation hooks with ApiSDK pattern, queryKey conventions, and cache invalidation |
+| `zod-form` | Generate Zod schemas + react-hook-form setup — single and multi-step forms with standardSchemaResolver |
+| `zustand` | Scaffold Zustand v5 stores — persisted with partialize/onRehydrateStorage, UI stores, and wizard stores |
+| `ui-component` | Create React components following Atomic Design — atoms with CVA+cn()+Radix UI or feature-specific components |
+| `casl` | Add or review CASL permission checks — usePermissionsStore, haveSomePermission, route and component-level guards |
 
 ## Install via Claude Code
 
@@ -54,12 +54,12 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 /migration-helper
 /error-handler
 /security-review
-/fe-feature-module
-/fe-service-hook
-/fe-zod-form
-/fe-zustand-store
-/fe-component
-/fe-permissions
+/nextjs-feature
+/react-query
+/zod-form
+/zustand
+/ui-component
+/casl
 ```
 
 ---
