@@ -190,15 +190,15 @@ Run both actions in parallel:
 **6a — Create the document**
 
 Use `mcp__linear-server__create_document` with:
-- `title`: `Weekly Report – [Project Name] – [Monday date]` (e.g. "Weekly Report – Lety 2.0 – 2026-03-30")
+- `title`: `Reporte Semanal — [Project Name] | [Monday date short] – [Sunday/today date short] [year]` (e.g. "Reporte Semanal — Lety 2.0 | 30 Mar – 5 Abr 2026")
 - `content`: the full report markdown from STEP 5
-- `projectId`: `238db191-8f5b-4c85-9657-5ea5d044f817`
+- `project`: `238db191-8f5b-4c85-9657-5ea5d044f817`
 
-**6b — Update the Reports & Communications project**
+**6b — Update the Reports & Communications project summary**
 
 Use `mcp__linear-server__save_project` with:
 - `id`: `238db191-8f5b-4c85-9657-5ea5d044f817`
-- `summary`: `Last report: [Project Name] – week of [Monday date] (generated [today's date])`
+- `summary`: a concise summary (max 255 chars) with document title, generation date, and 1-2 key highlights from the report
 
 After both complete, show the document URL to the user.
 

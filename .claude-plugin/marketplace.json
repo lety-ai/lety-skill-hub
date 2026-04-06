@@ -100,6 +100,16 @@
       "name": "casl",
       "description": "Add or review CASL permission checks — usePermissionsStore, haveSomePermission, conditional rendering, and route-level protection",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/casl" }
+    },
+    {
+      "name": "websocket",
+      "description": "Scaffold NestJS WebSocket gateways with Socket.io, JWT auth guard, tenant room isolation, RabbitMQ broadcast pattern, and Next.js client hook + Zustand store",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/websocket" }
+    },
+    {
+      "name": "design-patterns",
+      "description": "Review and refactor code using design patterns — detect duplication, god services, and mixed concerns; apply Strategy, Factory, Decorator, Facade, Observer, Container/Presenter, and Custom Hook patterns",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/design-patterns" }
     }
   ]
 }

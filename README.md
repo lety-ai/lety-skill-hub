@@ -25,6 +25,8 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 | `zustand` | Scaffold Zustand v5 stores — persisted with partialize/onRehydrateStorage, UI stores, and wizard stores |
 | `ui-component` | Create React components following Atomic Design — atoms with CVA+cn()+Radix UI or feature-specific components |
 | `casl` | Add or review CASL permission checks — usePermissionsStore, haveSomePermission, route and component-level guards |
+| `websocket` | Scaffold NestJS WebSocket gateway with Socket.io, JWT auth guard, tenant room isolation, RabbitMQ broadcast, and Next.js client hook |
+| `design-patterns` | Review and refactor code using design patterns — detect duplication, god services, mixed concerns; apply Strategy, Facade, Observer, Container/Presenter, Custom Hook patterns |
 
 ## Install via Claude Code
 
@@ -60,6 +62,8 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 /zustand
 /ui-component
 /casl
+/websocket
+/design-patterns
 ```
 
 ---
