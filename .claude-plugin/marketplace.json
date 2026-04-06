@@ -65,6 +65,11 @@
       "name": "error-handler",
       "description": "Write, review or fix error handling — BaseRpcException with correct gRPC status codes, TypeORM exception filters, RpcToHttpInterceptor mapping, RabbitMQ ack/nack patterns",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/error-handler" }
+    },
+    {
+      "name": "security-review",
+      "description": "Review JWT strategies, auth guards, middleware, and security config — flags vulnerabilities against NestJS docs and OWASP best practices",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/security-review" }
     }
   ]
 }

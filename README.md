@@ -18,6 +18,7 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 | `test-scaffold` | Generate unit tests for NestJS services — minimal mocks, `getRepositoryToken`, gRPC status code assertions |
 | `migration-helper` | Guide TypeORM migration workflow — generate, review, run, revert across tenant/platform/auth schemas |
 | `error-handler` | Write, review or fix error handling — BaseRpcException, TypeORM filters, RpcToHttpInterceptor, RMQ ack/nack |
+| `security-review` | Review JWT strategies, auth guards, middleware, and security config — flags vulnerabilities against NestJS docs and OWASP |
 
 ## Install via Claude Code
 
@@ -46,6 +47,7 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 /test-scaffold
 /migration-helper
 /error-handler
+/security-review
 ```
 
 ---
