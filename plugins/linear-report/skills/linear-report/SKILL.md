@@ -183,7 +183,20 @@ Rules for the report:
 
 ---
 
-## STEP 6 — Offer follow-up actions
+## STEP 6 — Save report to Linear
+
+Save the report as a document in the **Reports & Communications** project (ID: `238db191-8f5b-4c85-9657-5ea5d044f817`).
+
+Use `mcp__linear-server__create_document` with:
+- `title`: `Weekly Report – [Project Name] – [Monday date]` (e.g. "Weekly Report – Lety 2.0 – 2026-03-30")
+- `content`: the full report markdown from STEP 5
+- `projectId`: `238db191-8f5b-4c85-9657-5ea5d044f817`
+
+After saving, show the document URL to the user.
+
+---
+
+## STEP 7 — Offer follow-up actions
 
 After the report, offer:
 
