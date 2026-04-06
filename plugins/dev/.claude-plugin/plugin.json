@@ -1,0 +1,13 @@
+{
+  "name": "dev",
+  "description": "Git & GitHub workflow skills for Claude Code — GitFlow PRs for develop, staging, and production following Conventional Commits",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lety AI",
+    "email": "team@lety.ai"
+  },
+  "repository": "https://github.com/lety-ai/claude-skills",
+  "license": "MIT",
+  "keywords": ["git", "github", "gitflow", "pr", "release", "conventional-commits"],
+  "skills": "./skills"
+}

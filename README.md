@@ -1,60 +1,75 @@
 # lety-skill-hub
 
-Internal marketplace for sharing and distributing Claude Code skills across the Lety AI team.
+Official Claude Code plugin marketplace for the Lety AI team. Distributes skills as installable plugins directly from Claude Code using the `/plugin` command.
 
-## What is a skill?
+## Plugins
 
-A skill is a reusable prompt or slash command for Claude Code that automates a specific workflow. Skills live in `~/.claude/skills/` and are invoked with `/skill-name` in any Claude Code session.
+| Plugin | Skills | Description |
+|--------|--------|-------------|
+| `linear` | `linear-task`, `linear-report` | Linear issue management & weekly reports |
+| `dev` | `pr-develop`, `pr-staging`, `pr-production` | GitFlow PRs for all environments |
+
+## Install via Claude Code
+
+**1. Add this marketplace** (one-time setup):
+```
+/plugin marketplace add lety-ai/claude-skills
+```
+
+**2. Browse and install plugins:**
+```
+/plugin
+```
+Opens the plugin manager — go to **Discover**, select the plugins you want, choose `user` (global) or `project` (local), and install.
+
+**3. Use the skills:**
+```
+/linear:linear-task
+/linear:linear-report
+/dev:pr-develop
+/dev:pr-staging
+/dev:pr-production
+```
+
+---
 
 ## Structure
 
 ```
-skills/
-  <category>/
-    <skill-name>/
-      skill.md        # The skill definition (required)
-      README.md       # Usage, examples, and context (required)
-      example/        # Optional: sample input/output files
+.claude-plugin/
+  marketplace.json          # Marketplace manifest (lists all plugins)
+
+plugins/
+  linear/                   # Plugin: linear
+    .claude-plugin/
+      plugin.json           # Plugin manifest
+    skills/
+      linear-task/
+        SKILL.md
+      linear-report/
+        SKILL.md
+
+  dev/                      # Plugin: dev
+    .claude-plugin/
+      plugin.json
+    skills/
+      pr-develop/
+        SKILL.md
+      pr-staging/
+        SKILL.md
+      pr-production/
+        SKILL.md
 ```
 
-## How to install a skill
+## How to contribute a plugin
 
-**List all available skills:**
-```bash
-./install.sh
-```
-
-**Install one or more skills:**
-```bash
-./install.sh linear-task
-./install.sh linear-task linear-report pr-develop
-```
-
-**Install everything:**
-```bash
-./install.sh --all
-```
-
-Skills are installed to `~/.claude/skills/`. Use them in Claude Code with `/<skill-name>`.
-
-## How to contribute a skill
-
-1. Create a branch: `git checkout -b skill/<your-skill-name>`
-2. Add your skill under `skills/<category>/<skill-name>/`
-3. Fill in `skill.md` and `README.md` using the templates below
-4. Open a pull request
-
-## Skill categories
-
-| Category | Skills | Description |
-|----------|--------|-------------|
-| [`dev`](./skills/dev/) | pr-develop, pr-staging, pr-production | Git, PRs, releases (GitFlow) |
-| `data` | — | Data processing and analysis |
-| `ops` | — | DevOps, deployments, infrastructure |
-| `docs` | — | Documentation generation |
-| `general` | — | General purpose utilities |
+1. Create a branch: `git checkout -b plugin/<name>`
+2. Add your plugin under `plugins/<name>/`
+3. Create `.claude-plugin/plugin.json` and `skills/<skill-name>/SKILL.md`
+4. Register it in `.claude-plugin/marketplace.json`
+5. Open a pull request
 
 ## Templates
 
-- [skill.md template](.github/templates/skill.md)
-- [README.md template](.github/templates/skill-readme.md)
+- [plugin.json template](.github/templates/plugin.json)
+- [SKILL.md template](.github/templates/SKILL.md)

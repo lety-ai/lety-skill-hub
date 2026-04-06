@@ -1,0 +1,26 @@
+{
+  "name": "lety-skill-hub",
+  "description": "Internal marketplace of Claude Code plugins for the Lety AI team",
+  "owner": {
+    "name": "Lety AI",
+    "email": "team@lety.ai"
+  },
+  "plugins": [
+    {
+      "name": "linear",
+      "source": "./plugins/linear",
+      "description": "Linear issue management: create tasks with user story format and generate weekly reports",
+      "version": "1.0.0",
+      "author": { "name": "Lety AI" },
+      "keywords": ["linear", "issues", "agile", "reports", "tasks"]
+    },
+    {
+      "name": "dev",
+      "source": "./plugins/dev",
+      "description": "Git & GitHub workflows: GitFlow PRs for develop, staging, and production",
+      "version": "1.0.0",
+      "author": { "name": "Lety AI" },
+      "keywords": ["git", "github", "gitflow", "pr", "release"]
+    }
+  ]
+}
