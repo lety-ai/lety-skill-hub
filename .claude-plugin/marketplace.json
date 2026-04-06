@@ -30,6 +30,11 @@
       "name": "pr-production",
       "description": "Strip RC suffix and create a PR from staging to master for production release following GitFlow",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-production" }
+    },
+    {
+      "name": "typeorm",
+      "description": "TypeORM best practices for NestJS + DataSource (0.3.x): no raw SQL, Repository/QueryBuilder only, relations via TypeORM options, migrations via CLI",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/typeorm" }
     }
   ]
 }
