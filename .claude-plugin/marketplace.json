@@ -45,6 +45,11 @@
       "name": "entity-dto",
       "description": "Generate a TypeORM entity + Create/Update DTOs for Lety 2.0 Backend following official best practices — flags existing code issues",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/entity-dto" }
+    },
+    {
+      "name": "gateway-controller",
+      "description": "Scaffold a complete API Gateway feature: proto service + interface files, REST controller with Swagger/Permissions, gRPC service with lastValueFrom, and NestJS module with ClientsModule.registerAsync",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/gateway-controller" }
     }
   ]
 }
