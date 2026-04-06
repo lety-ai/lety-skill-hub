@@ -1,0 +1,8 @@
+{
+  "name": "fe-component",
+  "description": "Create React components for Lety 2.0 Frontend following Atomic Design — shared/ui atoms with CVA+cn()+Radix UI, or feature-specific components with correct placement",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["react", "components", "radix-ui", "tailwind", "cva", "atomic-design", "lety"],
+  "skills": "./skills"
+}

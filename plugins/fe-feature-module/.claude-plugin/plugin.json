@@ -1,0 +1,8 @@
+{
+  "name": "fe-feature-module",
+  "description": "Scaffold a complete Lety 2.0 Frontend feature module following Screaming Architecture + Atomic Design: components, views, services, model, and logic folders with correct file suffixes",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["nextjs", "react", "feature", "scaffold", "architecture", "screaming-architecture", "lety"],
+  "skills": "./skills"
+}

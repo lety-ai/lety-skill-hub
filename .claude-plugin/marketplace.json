@@ -70,6 +70,36 @@
       "name": "security-review",
       "description": "Review JWT strategies, auth guards, middleware, and security config — flags vulnerabilities against NestJS docs and OWASP best practices",
       "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/security-review" }
+    },
+    {
+      "name": "fe-feature-module",
+      "description": "Scaffold a complete Lety 2.0 Frontend feature module following Screaming Architecture + Atomic Design: components, views, services, model, and logic folders",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-feature-module" }
+    },
+    {
+      "name": "fe-service-hook",
+      "description": "Generate TanStack Query v5 useQuery/useMutation hooks for Lety 2.0 Frontend using the ApiSDK pattern with correct queryKey, error handling, and cache invalidation",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-service-hook" }
+    },
+    {
+      "name": "fe-zod-form",
+      "description": "Generate Zod schemas and react-hook-form setup for Lety 2.0 Frontend — single and multi-step forms with standardSchemaResolver and partial step validation",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-zod-form" }
+    },
+    {
+      "name": "fe-zustand-store",
+      "description": "Scaffold Zustand v5 stores for Lety 2.0 Frontend — persisted stores with partialize/onRehydrateStorage and non-persisted UI stores",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-zustand-store" }
+    },
+    {
+      "name": "fe-component",
+      "description": "Create React components for Lety 2.0 Frontend following Atomic Design — shared/ui atoms with CVA+cn()+Radix UI, or feature-specific components",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-component" }
+    },
+    {
+      "name": "fe-permissions",
+      "description": "Add or review CASL permission checks in Lety 2.0 Frontend — usePermissionsStore, haveSomePermission, conditional rendering, and sidebar route protection",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/fe-permissions" }
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "name": "fe-permissions",
+  "description": "Add or review CASL permission checks in Lety 2.0 Frontend — usePermissionsStore, haveSomePermission, conditional rendering, and sidebar route protection",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["casl", "permissions", "auth", "react", "nextjs", "typescript", "lety"],
+  "skills": "./skills"
+}

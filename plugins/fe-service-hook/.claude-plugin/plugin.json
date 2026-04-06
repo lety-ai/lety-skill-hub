@@ -1,0 +1,8 @@
+{
+  "name": "fe-service-hook",
+  "description": "Generate TanStack Query v5 useQuery/useMutation hooks for Lety 2.0 Frontend following the ApiSDK pattern with correct queryKey, error handling, and cache invalidation",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["react-query", "tanstack", "hooks", "api", "nextjs", "typescript", "lety"],
+  "skills": "./skills"
+}
