@@ -22,7 +22,9 @@ A wrong change request is worse than no comment — it wastes the developer's ti
 
 3. **Verify in the codebase.** Search for the same pattern in files that were not changed. If the project already uses this pattern consistently and it works, the new code is likely correct too. Only flag inconsistency if the existing pattern is itself wrong.
 
-If your finding does not survive all three checks, drop it.
+4. **Verify existence before claiming absence.** If you are about to write that something "doesn't exist", "is missing", "was not implemented", or "needs to be created" — you must read the actual file where it should exist and confirm with your own eyes that it is absent. For a missing method, read the full service/hook/store file. For a missing test, read the spec file at its expected path. For a missing field or type, read that interface or schema file. Do not rely on the diff alone — the file may have pre-existing content that was not part of the changes. If you find the thing (under any name or variation), drop the finding entirely. Only report something as missing after you have read the relevant file and confirmed it is not there.
+
+If your finding does not survive all four checks, drop it.
 
 ---
 
