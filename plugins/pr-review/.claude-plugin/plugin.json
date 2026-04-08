@@ -1,0 +1,8 @@
+{
+  "name": "pr-review",
+  "description": "Review a pull request across backend (NestJS/gRPC/TypeORM/RabbitMQ) and frontend (Next.js/Zustand/TanStack Query/CASL) — detects changed files, dispatches specialized reviewers in parallel, and produces a tiered report with Critical / Important / Suggestion findings",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["pr-review", "code-review", "backend", "frontend", "nestjs", "nextjs", "quality"],
+  "skills": "./skills"
+}

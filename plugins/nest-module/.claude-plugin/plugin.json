@@ -1,0 +1,8 @@
+{
+  "name": "nest-module",
+  "description": "Scaffold a complete NestJS module for Lety 2.0 Backend: entity, DTOs, module, gRPC controller, service with BaseRpcException, unit test and mock factory — following project conventions",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["nestjs", "typeorm", "grpc", "scaffold", "module", "generator", "lety"],
+  "skills": "./skills"
+}

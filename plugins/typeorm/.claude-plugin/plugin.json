@@ -1,0 +1,8 @@
+{
+  "name": "typeorm",
+  "description": "TypeORM best practices for NestJS + DataSource (0.3.x): no raw SQL, Repository/QueryBuilder only, relations via TypeORM options, migrations via CLI",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["typeorm", "nestjs", "database", "orm", "postgresql", "repository", "migrations"],
+  "skills": "./skills"
+}

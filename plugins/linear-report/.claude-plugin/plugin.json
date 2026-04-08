@@ -1,0 +1,8 @@
+{
+  "name": "linear-report",
+  "description": "Generate weekly activity reports from Linear grouped by project, milestone, and contributor",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["linear", "reports", "weekly", "sprint", "milestone"],
+  "skills": "./skills"
+}

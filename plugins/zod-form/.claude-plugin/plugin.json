@@ -1,0 +1,8 @@
+{
+  "name": "zod-form",
+  "description": "Generate Zod schemas and react-hook-form setup — single and multi-step forms with standardSchemaResolver, partial step validation, and cross-field refinements",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["zod", "react-hook-form", "forms", "validation", "typescript", "nextjs", "lety"],
+  "skills": "./skills"
+}

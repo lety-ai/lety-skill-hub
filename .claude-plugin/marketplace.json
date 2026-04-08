@@ -7,9 +7,114 @@
   },
   "plugins": [
     {
-      "name": "lety-skill-hub",
-      "description": "Official Claude Code plugin for the Lety AI team — includes skills for NestJS, Next.js, Linear, PRs, TypeORM, testing, and more",
-      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub" }
+      "name": "linear-task",
+      "description": "Create Linear issues with user story, Gherkin acceptance criteria, and Definition of Done",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/linear-task" }
+    },
+    {
+      "name": "linear-report",
+      "description": "Generate weekly activity reports from Linear grouped by project, milestone, and contributor",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/linear-report" }
+    },
+    {
+      "name": "pr-develop",
+      "description": "Create a PR from a feature/fix/chore branch to develop following GitFlow and Conventional Commits",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-develop" }
+    },
+    {
+      "name": "pr-staging",
+      "description": "Cut a release branch, bump version to RC, and create a PR to staging following GitFlow and semver",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-staging" }
+    },
+    {
+      "name": "pr-production",
+      "description": "Strip RC suffix and create a PR from staging to master for production release following GitFlow",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-production" }
+    },
+    {
+      "name": "typeorm",
+      "description": "TypeORM best practices for NestJS + DataSource (0.3.x): no raw SQL, Repository/QueryBuilder only, relations via TypeORM options, migrations via CLI",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/typeorm" }
+    },
+    {
+      "name": "nest-module",
+      "description": "Scaffold a complete NestJS module for Lety 2.0 Backend: entity, DTOs, module, gRPC controller, service with BaseRpcException, unit test and mock factory",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/nest-module" }
+    },
+    {
+      "name": "entity-dto",
+      "description": "Generate a TypeORM entity + Create/Update DTOs for Lety 2.0 Backend following official best practices — flags existing code issues",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/entity-dto" }
+    },
+    {
+      "name": "gateway-controller",
+      "description": "Scaffold a complete API Gateway feature: proto service + interface files, REST controller with Swagger/Permissions, gRPC service with lastValueFrom, and NestJS module with ClientsModule.registerAsync",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/gateway-controller" }
+    },
+    {
+      "name": "test-scaffold",
+      "description": "Generate unit tests for NestJS services — minimal mocks, getRepositoryToken, mock factory with EntityLike type, gRPC status code assertions",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/test-scaffold" }
+    },
+    {
+      "name": "migration-helper",
+      "description": "Guide TypeORM migration workflow — generate, review, run, revert and register migrations across tenant/platform/auth schemas",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/migration-helper" }
+    },
+    {
+      "name": "error-handler",
+      "description": "Write, review or fix error handling — BaseRpcException with correct gRPC status codes, TypeORM exception filters, RpcToHttpInterceptor mapping, RabbitMQ ack/nack patterns",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/error-handler" }
+    },
+    {
+      "name": "security-review",
+      "description": "Review JWT strategies, auth guards, middleware, and security config — flags vulnerabilities against NestJS docs and OWASP best practices",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/security-review" }
+    },
+    {
+      "name": "nextjs-feature",
+      "description": "Scaffold a complete Next.js feature module following Screaming Architecture + Atomic Design: components, views, services, model, and logic folders",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/nextjs-feature" }
+    },
+    {
+      "name": "react-query",
+      "description": "Generate TanStack Query v5 useQuery/useMutation hooks with ApiSDK pattern, correct queryKey conventions, error handling, and cache invalidation",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/react-query" }
+    },
+    {
+      "name": "zod-form",
+      "description": "Generate Zod schemas and react-hook-form setup — single and multi-step forms with standardSchemaResolver and partial step validation",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/zod-form" }
+    },
+    {
+      "name": "zustand",
+      "description": "Scaffold Zustand v5 stores — persisted stores with partialize/onRehydrateStorage, non-persisted UI stores, and wizard stores",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/zustand" }
+    },
+    {
+      "name": "ui-component",
+      "description": "Create React components following Atomic Design — base atoms with CVA+cn()+Radix UI, composite shared components, or feature-specific components",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/ui-component" }
+    },
+    {
+      "name": "casl",
+      "description": "Add or review CASL permission checks — usePermissionsStore, haveSomePermission, conditional rendering, and route-level protection",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/casl" }
+    },
+    {
+      "name": "websocket",
+      "description": "Scaffold NestJS WebSocket gateways with Socket.io, JWT auth guard, tenant room isolation, RabbitMQ broadcast pattern, and Next.js client hook + Zustand store",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/websocket" }
+    },
+    {
+      "name": "design-patterns",
+      "description": "Review and refactor code using design patterns — detect duplication, god services, and mixed concerns; apply Strategy, Factory, Decorator, Facade, Observer, Container/Presenter, and Custom Hook patterns",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/design-patterns" }
+    },
+    {
+      "name": "pr-review",
+      "description": "Review a pull request for Lety 2.0 — detects backend/frontend changes, dispatches specialist reviewers in parallel, and produces a tiered Critical/Important/Suggestion report covering conventions, error handling, security, TypeORM, CASL permissions, and state management",
+      "source": { "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/pr-review" }
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "name": "gateway-controller",
+  "description": "Scaffold a complete API Gateway feature: proto service + interface files, REST controller with Swagger/Permissions, gRPC service with lastValueFrom, and NestJS module with ClientsModule.registerAsync",
+  "version": "1.0.0",
+  "author": { "name": "Lety AI" },
+  "keywords": ["nestjs", "grpc", "protobuf", "gateway", "rest", "swagger", "scaffold", "lety"],
+  "skills": "./skills"
+}
