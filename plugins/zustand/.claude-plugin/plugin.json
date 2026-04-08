@@ -2,7 +2,7 @@
   "name": "zustand",
   "description": "Scaffold Zustand v5 stores — persisted stores with partialize and onRehydrateStorage, non-persisted UI stores, and multi-step wizard stores",
   "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["zustand", "state-management", "react", "nextjs", "typescript", "lety"],
-  "skills": "./skills"
+  "author": {
+    "name": "Lety AI"
+  }
 }

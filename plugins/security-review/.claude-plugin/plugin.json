@@ -2,7 +2,7 @@
   "name": "security-review",
   "description": "Review JWT strategies, auth guards, middleware, and security config in Lety 2.0 Backend — flags vulnerabilities against NestJS and OWASP best practices",
   "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["security", "jwt", "guards", "nestjs", "auth", "owasp", "cors", "helmet", "lety"],
-  "skills": "./skills"
+  "author": {
+    "name": "Lety AI"
+  }
 }

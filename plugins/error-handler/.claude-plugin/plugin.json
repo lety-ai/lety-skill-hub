@@ -2,7 +2,7 @@
   "name": "error-handler",
   "description": "Write, review or fix error handling — BaseRpcException with correct gRPC status codes, TypeORM exception filters, RpcToHttpInterceptor mapping, RabbitMQ ack/nack patterns",
   "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["nestjs", "grpc", "exceptions", "error-handling", "rabbitmq", "typeorm", "lety"],
-  "skills": "./skills"
+  "author": {
+    "name": "Lety AI"
+  }
 }

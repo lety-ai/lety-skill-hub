@@ -33,7 +33,7 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 
 **1. Add this marketplace** (one-time setup):
 ```
-/plugin marketplace add lety-ai/claude-skills
+/plugin marketplace add https://github.com/lety-ai/lety-skill-hub
 ```
 
 **2. Browse and install plugins:**

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-`lety-skill-hub` is the official Claude Code plugin marketplace for the Lety AI team. It distributes Claude Code skills as installable plugins via `/plugin marketplace add lety-ai/claude-skills`.
+`lety-skill-hub` is the official Claude Code plugin marketplace for the Lety AI team. It distributes Claude Code skills as installable plugins via `/plugin marketplace add https://github.com/lety-ai/lety-skill-hub`.
 
 ## Plugin system structure
 
@@ -19,9 +19,9 @@ plugins/<plugin-name>/
       SKILL.md        # Skill prompt — MUST be uppercase SKILL.md
 ```
 
-The marketplace manifest lives at `.claude-plugin/marketplace.json` and lists every plugin with its GitHub source path:
+The marketplace manifest lives at `.claude-plugin/marketplace.json` and lists every plugin with a relative source path:
 ```json
-{ "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/<name>" }
+{ "name": "<name>", "description": "...", "source": "./plugins/<name>" }
 ```
 
 Templates for both files are at `.github/templates/plugin.json` and `.github/templates/SKILL.md`.
