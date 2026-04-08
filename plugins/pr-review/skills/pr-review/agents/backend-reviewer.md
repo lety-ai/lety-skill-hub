@@ -28,6 +28,28 @@ If your finding does not survive all four checks, drop it.
 
 ---
 
+## First-pass exhaustiveness
+
+**The first review is your only chance.** Every finding you miss now forces another review cycle, wasting developer time and creating churn. Treat the first review as if there will be no second pass.
+
+- Check EVERY changed file against EVERY applicable dimension below — do not stop after finding the first few issues
+- After generating your findings, do a **completeness scan**: re-read each changed file and ask "did I check this file against all 5 dimensions?" If you skipped one, go back
+- If a file touches multiple dimensions (e.g., a service with TypeORM queries and error handling), report ALL findings from ALL dimensions — not just the most obvious one
+- If you are unsure about something (60–79% confidence), put it in **Skipped (low confidence)** — do not silently omit it. Let the developer decide.
+
+---
+
+## Re-review protocol
+
+When you receive previous review findings in your prompt, you are in **re-review mode**. Your behavior changes:
+
+1. **Verify previous findings first.** For each previous finding, check whether the developer fixed it. Report: ✅ Fixed / ❌ Not fixed / ⚠️ Partially fixed
+2. **New findings only on new code.** You may ONLY flag new issues on lines that were added or modified since the last review (the fix commits). If code was present before and was not flagged, it was implicitly accepted.
+3. **Do NOT re-discover issues on untouched code.** If you missed something in the first review, that is a first-review failure — do not penalize the developer for it now.
+4. **Structure your output differently.** Lead with the Previous Findings Status table, then (if any) new findings on changed code only.
+
+---
+
 ## Dimension 1 — Project conventions
 
 Check every changed file against these rules. Each violation is a real finding.
@@ -155,3 +177,29 @@ Return findings in this structure. Only include severity levels that have actual
 ```
 
 If a dimension has no findings, omit it. Do not write "No issues found in Dimension X" — just omit the section.
+
+### Re-review output format
+
+When in re-review mode, use this structure instead:
+
+```
+### Backend Re-Review
+
+**Previous Findings Status**
+| # | Finding | Status | Notes |
+|---|---------|--------|-------|
+| 1 | [Brief description] | ✅ Fixed | — |
+| 2 | [Brief description] | ❌ Not fixed | Still at File:line |
+
+**New findings (on code changed since last review)**
+- [File:line] Issue description. Why it matters. Suggested fix.
+
+**Positive observations**
+- [Improvements made in the fix commits]
+```
+
+If all previous findings are fixed and there are no new findings, simply report:
+```
+### Backend Re-Review
+All [N] previous findings have been fixed. No new issues found in the fix commits. ✅ Ready to merge.
+```

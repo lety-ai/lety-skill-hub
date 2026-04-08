@@ -22,6 +22,26 @@ git log origin/develop...HEAD --oneline
 
 If the diff is empty (no commits ahead of develop), stop and tell the user there is nothing to review.
 
+### Detect previous reviews (re-review detection)
+
+If `gh` CLI is available, check for existing review comments on this PR:
+
+```bash
+PR_NUMBER=$(gh pr view --json number -q .number 2>/dev/null)
+if [ -n "$PR_NUMBER" ]; then
+  gh api "repos/{owner}/{repo}/pulls/$PR_NUMBER/reviews" --jq '.[] | {id, state, body, submitted_at, user: .user.login}'
+  gh api "repos/{owner}/{repo}/pulls/$PR_NUMBER/comments" --jq '.[] | {path, body, line, original_line, created_at, user: .user.login}'
+  gh pr view --json comments --jq '.comments[] | {body, author: .author.login, createdAt}'
+fi
+```
+
+If previous review comments from this tool (or from Claude) exist, this is a **re-review**. Collect ALL previous findings into a `PREVIOUS_FINDINGS` block — you will pass this to every specialist reviewer so they can:
+1. Verify whether each previous finding was properly fixed
+2. Only flag new issues in code that was **changed since the last review**
+3. **Never raise new findings on code that existed in the previous review and was not flagged then** — if it was acceptable before, it is acceptable now unless it was modified
+
+If no previous review comments exist, this is a **first review**. Tell the reviewers explicitly: `"This is the FIRST review — be exhaustive. Every issue you miss now will create another review cycle."`
+
 ---
 
 ## STEP 2 — Classify changed files
@@ -54,12 +74,22 @@ Prompt template:
 You are the Lety 2.0 backend reviewer. Read the agent instructions from:
 /home/lockd/claude-skills/plugins/pr-review/skills/pr-review/agents/backend-reviewer.md
 
+Review mode: <FIRST REVIEW | RE-REVIEW>
+
 Then review this git diff:
 
 <PASTE FULL DIFF HERE>
 
 Changed files (backend bucket):
 <LIST BACKEND FILES>
+
+Previous review findings (empty if first review):
+<PASTE PREVIOUS_FINDINGS OR "None — this is the first review. Be exhaustive.">
+
+If this is a RE-REVIEW:
+1. For each previous finding, verify if it was fixed. Report status: ✅ Fixed / ❌ Not fixed / ⚠️ Partially fixed
+2. Only raise NEW findings on lines that were CHANGED since the last review
+3. Do NOT raise new findings on code that was already present and reviewed before
 
 Return a structured report following the format defined in the agent instructions.
 ```
@@ -71,12 +101,22 @@ Prompt template:
 You are the Lety 2.0 frontend reviewer. Read the agent instructions from:
 /home/lockd/claude-skills/plugins/pr-review/skills/pr-review/agents/frontend-reviewer.md
 
+Review mode: <FIRST REVIEW | RE-REVIEW>
+
 Then review this git diff:
 
 <PASTE FULL DIFF HERE>
 
 Changed files (frontend bucket):
 <LIST FRONTEND FILES>
+
+Previous review findings (empty if first review):
+<PASTE PREVIOUS_FINDINGS OR "None — this is the first review. Be exhaustive.">
+
+If this is a RE-REVIEW:
+1. For each previous finding, verify if it was fixed. Report status: ✅ Fixed / ❌ Not fixed / ⚠️ Partially fixed
+2. Only raise NEW findings on lines that were CHANGED since the last review
+3. Do NOT raise new findings on code that was already present and reviewed before
 
 Return a structured report following the format defined in the agent instructions.
 ```
@@ -134,10 +174,40 @@ Estimated merge readiness: BLOCKED / NEEDS WORK / READY WITH MINOR FIXES / APPRO
 
 ---
 
-## STEP 5 — Offer selective re-review
+## STEP 5 — Re-review protocol
 
-After the report, tell the user:
-> "You can ask me to re-run just one reviewer — e.g., 're-review backend error handling' or 'check frontend permissions only'."
+### If this is a FIRST review:
+
+After delivering the report, tell the user:
+> "This is the first review. All findings are listed above — fix them and ask me to re-review when ready."
+
+### If this is a RE-REVIEW:
+
+Structure the report differently. Before the standard tiered findings, add a **Previous Findings Status** section:
+
+```
+## Previous Findings Status
+
+| # | Finding | Status | Notes |
+|---|---------|--------|-------|
+| 1 | [Brief description] | ✅ Fixed | — |
+| 2 | [Brief description] | ❌ Not fixed | Still present at File:line |
+| 3 | [Brief description] | ⚠️ Partially fixed | [What remains] |
+```
+
+Then, only if there are new findings on **newly changed code**, add them in the standard tiered format. Make it clear these are new:
+
+```
+## New findings (on code changed since last review)
+### 🔴 CRITICAL — Must fix before merge
+...
+```
+
+**Re-review constraints:**
+- If all previous findings are ✅ Fixed and there are no new findings → report **APPROVED**
+- If some previous findings are ❌ Not fixed → report **NEEDS WORK** and list only the unfixed items
+- New findings are ONLY allowed on lines that were added or modified since the last review — never on code that was already present and accepted in the previous review
+- Do NOT re-discover issues on untouched code — if you missed it the first time, it was implicitly accepted
 
 ---
 
@@ -150,3 +220,18 @@ After the report, tell the user:
 - Never suggest changes that are outside the scope of the diff — only review what was changed
 - For very large diffs (> 500 lines), prioritise reviewing: guards, services, DTOs, entities — in that order
 - If `gh` CLI is available, run `gh pr view --json title,body,labels` to include PR metadata in the report header
+
+### First-review exhaustiveness
+
+- **The first review MUST catch everything.** Every missed finding means another review cycle, which wastes developer time. There is no second chance — treat the first review as the only review.
+- Reviewers must check EVERY changed file against EVERY applicable dimension — do not stop after finding the first few issues
+- After generating findings, do a **completeness scan**: re-read each changed file one more time and ask "did I check this against all dimensions?" If you skipped a dimension, go back and check it
+- If you are unsure whether something is an issue, include it in **Skipped (low confidence)** rather than silently omitting it — the developer can decide
+
+### Re-review discipline
+
+- **Always read previous review comments before dispatching reviewers** — use `gh api` to fetch them
+- On re-review, the ONLY new findings allowed are on **lines that changed since the last review** (i.e., in the fix commits)
+- If code was present in the previous review and was not flagged, it is implicitly accepted — do NOT raise new findings on it during re-review
+- The re-review report must start with a **Previous Findings Status** table showing ✅ Fixed / ❌ Not fixed / ⚠️ Partially fixed for every previous finding
+- Goal: **zero unnecessary review cycles** — one thorough first review, one verification re-review, done
