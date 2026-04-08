@@ -1,8 +1,0 @@
-{
-  "name": "linear-task",
-  "description": "Create Linear issues with user story, Gherkin acceptance criteria, and Definition of Done",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["linear", "issues", "agile", "user-story", "acceptance-criteria"],
-  "skills": "./skills"
-}

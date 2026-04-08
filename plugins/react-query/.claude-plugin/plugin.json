@@ -1,8 +1,0 @@
-{
-  "name": "react-query",
-  "description": "Generate TanStack Query v5 useQuery/useMutation hooks following the ApiSDK pattern with correct queryKey conventions, error handling, and cache invalidation",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["react-query", "tanstack", "hooks", "api", "nextjs", "typescript", "lety"],
-  "skills": "./skills"
-}

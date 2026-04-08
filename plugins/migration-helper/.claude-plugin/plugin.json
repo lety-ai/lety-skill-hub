@@ -1,8 +1,0 @@
-{
-  "name": "migration-helper",
-  "description": "Guide TypeORM migration workflow for Lety 2.0 Backend — generate, review, run, revert and register migrations across tenant/platform/auth schemas",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["typeorm", "migrations", "postgresql", "database", "cli", "lety"],
-  "skills": "./skills"
-}

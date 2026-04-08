@@ -1,8 +1,0 @@
-{
-  "name": "casl",
-  "description": "Add or review CASL permission checks — usePermissionsStore, haveSomePermission, conditional component rendering, and route-level protection",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["casl", "permissions", "auth", "react", "nextjs", "typescript", "lety"],
-  "skills": "./skills"
-}

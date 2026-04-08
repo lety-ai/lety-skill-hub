@@ -1,8 +1,0 @@
-{
-  "name": "pr-develop",
-  "description": "Create a PR from a feature/fix/chore branch to develop following GitFlow and Conventional Commits",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["git", "github", "gitflow", "pr", "develop"],
-  "skills": "./skills"
-}

@@ -1,8 +1,0 @@
-{
-  "name": "pr-production",
-  "description": "Strip RC suffix and create a PR from staging to master for production release following GitFlow",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["git", "github", "gitflow", "pr", "production", "master", "release"],
-  "skills": "./skills"
-}

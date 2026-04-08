@@ -1,11 +1,11 @@
 # lety-skill-hub
 
-Official Claude Code plugin marketplace for the Lety AI team. Distributes skills as installable plugins directly from Claude Code using the `/plugin` command.
+Official Claude Code plugin for the Lety AI team. Distributes skills as a single installable plugin directly from Claude Code using the `/plugin` command.
 
-## Plugins
+## Skills
 
-| Plugin | Description |
-|--------|-------------|
+| Skill | Description |
+|-------|-------------|
 | `linear-task` | Create Linear issues with user story, Gherkin acceptance criteria, and Definition of Done |
 | `linear-report` | Generate weekly activity reports from Linear grouped by project, milestone, and contributor |
 | `pr-develop` | Create a PR from a feature/fix/chore branch to develop following GitFlow and Conventional Commits |
@@ -31,18 +31,12 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 
 ## Install via Claude Code
 
-**1. Add this marketplace** (one-time setup):
+**1. Add the plugin** (one-time setup):
 ```
-/plugin marketplace add lety-ai/claude-skills
+/plugin install github:lety-ai/lety-skill-hub
 ```
 
-**2. Browse and install plugins:**
-```
-/plugin
-```
-Opens the plugin manager — go to **Discover**, select the plugins you want, choose `user` (global) or `project` (local), and install.
-
-**3. Use the skills:**
+**2. Use any skill:**
 ```
 /linear-task
 /linear-report
@@ -74,24 +68,20 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 
 ```
 .claude-plugin/
-  marketplace.json          # Marketplace manifest (lists all plugins)
+  plugin.json           # Plugin manifest (single plugin with all skills)
+  marketplace.json      # Marketplace manifest (points to this repo)
 
-plugins/
-  <plugin-name>/
-    .claude-plugin/
-      plugin.json           # Plugin manifest
-    skills/
-      <plugin-name>/
-        SKILL.md            # Skill prompt content
+skills/
+  <skill-name>/
+    SKILL.md            # Skill prompt content
 ```
 
-## How to contribute a plugin
+## How to contribute a skill
 
-1. Create a branch: `git checkout -b plugin/<name>`
-2. Add your plugin under `plugins/<name>/`
-3. Create `.claude-plugin/plugin.json` and `skills/<skill-name>/SKILL.md`
-4. Register it in `.claude-plugin/marketplace.json`
-5. Open a pull request
+1. Create a branch: `git checkout -b skill/<name>`
+2. Create `skills/<name>/SKILL.md` (copy from `.github/templates/SKILL.md`)
+3. Update the skills table in this README
+4. Open a pull request
 
 ## Templates
 

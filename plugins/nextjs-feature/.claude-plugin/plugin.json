@@ -1,8 +1,0 @@
-{
-  "name": "nextjs-feature",
-  "description": "Scaffold a complete Next.js feature module following Screaming Architecture + Atomic Design: components, views, services, model, and logic folders with correct file suffixes",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["nextjs", "react", "feature", "scaffold", "architecture", "screaming-architecture", "lety"],
-  "skills": "./skills"
-}

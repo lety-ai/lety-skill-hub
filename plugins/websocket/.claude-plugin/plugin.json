@@ -1,8 +1,0 @@
-{
-  "name": "websocket",
-  "description": "Scaffold NestJS WebSocket gateways with Socket.io, JWT auth guard, tenant room isolation, RabbitMQ broadcast pattern, and Next.js client hook + Zustand store",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["websocket", "socket.io", "nestjs", "real-time", "events", "gateway"],
-  "skills": "./skills"
-}

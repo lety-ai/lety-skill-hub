@@ -4,36 +4,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-`lety-skill-hub` is the official Claude Code plugin marketplace for the Lety AI team. It distributes Claude Code skills as installable plugins via `/plugin marketplace add lety-ai/claude-skills`.
+`lety-skill-hub` is the official Claude Code plugin for the Lety AI team. It distributes all Claude Code skills as a single installable plugin via `/plugin install github:lety-ai/lety-skill-hub`.
 
-## Plugin system structure
+## Plugin structure
 
-Each plugin is fully self-contained under `plugins/<plugin-name>/`:
+The repo is a single plugin with all skills at the root level:
 
 ```
-plugins/<plugin-name>/
-  .claude-plugin/
-    plugin.json       # Plugin manifest (name, version, keywords, "skills": "./skills")
-  skills/
-    <plugin-name>/
-      SKILL.md        # Skill prompt — MUST be uppercase SKILL.md
-```
+.claude-plugin/
+  plugin.json           # Plugin manifest (name, version, keywords, "skills": "./skills")
+  marketplace.json      # Marketplace manifest (points to this repo)
 
-The marketplace manifest lives at `.claude-plugin/marketplace.json` and lists every plugin with its GitHub source path:
-```json
-{ "source": "github", "repo": "lety-ai/lety-skill-hub", "path": "plugins/<name>" }
+skills/
+  <skill-name>/
+    SKILL.md            # Skill prompt — MUST be uppercase SKILL.md
 ```
 
 Templates for both files are at `.github/templates/plugin.json` and `.github/templates/SKILL.md`.
 
-## Adding a new plugin
+## Adding a new skill
 
-1. Create `plugins/<name>/.claude-plugin/plugin.json` (copy from `.github/templates/plugin.json`)
-2. Create `plugins/<name>/skills/<name>/SKILL.md` (copy from `.github/templates/SKILL.md`)
-3. Register the plugin in `.claude-plugin/marketplace.json`
-4. **Update `README.md`** — add a row to the Plugins table and a `/skill-name` entry in the usage section
-
-README.md must always be kept in sync with marketplace.json. Any time a plugin is added, removed, or renamed, update both files in the same commit.
+1. Create `skills/<name>/SKILL.md` (copy from `.github/templates/SKILL.md`)
+2. **Update `README.md`** — add a row to the Skills table and a `/skill-name` entry in the usage section
 
 ## SKILL.md conventions
 

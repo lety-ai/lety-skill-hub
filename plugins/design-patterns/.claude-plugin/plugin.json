@@ -1,8 +1,0 @@
-{
-  "name": "design-patterns",
-  "description": "Review and refactor code using design patterns — detect duplication, god services, and mixed concerns; apply Strategy, Factory, Decorator, Facade, Observer, Container/Presenter, and Custom Hook patterns to the Lety 2.0 stack",
-  "version": "1.0.0",
-  "author": { "name": "Lety AI" },
-  "keywords": ["design-patterns", "refactor", "dry", "solid", "clean-code", "architecture"],
-  "skills": "./skills"
-}
