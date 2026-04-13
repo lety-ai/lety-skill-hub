@@ -1,0 +1,8 @@
+{
+  "name": "obsidian-context",
+  "description": "Search and read the Obsidian vault for relevant context — projects, people, notes, research, and standing context before starting any task",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lety AI"
+  }
+}
