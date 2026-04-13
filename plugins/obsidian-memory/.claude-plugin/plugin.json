@@ -1,0 +1,8 @@
+{
+  "name": "obsidian-memory",
+  "description": "Write to the Obsidian vault — create projects with people/notes/research, save general notes, update existing notes, move notes between sections, archive projects",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lety AI"
+  }
+}

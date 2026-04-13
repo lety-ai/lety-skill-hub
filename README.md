@@ -28,6 +28,8 @@ Official Claude Code plugin marketplace for the Lety AI team. Distributes skills
 | `websocket` | Scaffold NestJS WebSocket gateway with Socket.io, JWT auth guard, tenant room isolation, RabbitMQ broadcast, and Next.js client hook |
 | `design-patterns` | Review and refactor code using design patterns — detect duplication, god services, mixed concerns; apply Strategy, Facade, Observer, Container/Presenter, Custom Hook patterns |
 | `pr-review` | Review a PR for Lety 2.0 — auto-detects backend/frontend changes, dispatches specialist reviewers in parallel, produces tiered Critical/Important/Suggestion report |
+| `obsidian-context` | Search and read the Obsidian vault for relevant context — projects, people, notes, research, and standing context |
+| `obsidian-memory` | Write to the Obsidian vault — create projects, add people/notes/research, update notes, archive projects |
 
 ## Install via Claude Code
 
@@ -66,6 +68,8 @@ Opens the plugin manager — go to **Discover**, select the plugins you want, ch
 /websocket
 /design-patterns
 /pr-review
+/obsidian-context
+/obsidian-memory
 ```
 
 ---

@@ -116,6 +116,16 @@
       "name": "pr-review",
       "description": "Review a pull request for Lety 2.0 — detects backend/frontend changes, dispatches specialist reviewers in parallel, and produces a tiered Critical/Important/Suggestion report covering conventions, error handling, security, TypeORM, CASL permissions, and state management",
       "source": "./plugins/pr-review"
+    },
+    {
+      "name": "obsidian-context",
+      "description": "Search and read the Obsidian vault for relevant context — projects, people, notes, research, and standing context before starting any task",
+      "source": "./plugins/obsidian-context"
+    },
+    {
+      "name": "obsidian-memory",
+      "description": "Write to the Obsidian vault — create projects with people/notes/research, save general notes, update existing notes, move notes between sections, archive projects",
+      "source": "./plugins/obsidian-memory"
     }
   ]
 }
