@@ -1,6 +1,6 @@
 ---
 name: obsidian-context
-description: Search and read the Obsidian vault for relevant context before starting any task. This skill MUST be used at the start of every session and before any task where prior knowledge, project context, people info, research, or notes could be relevant. Use when the user asks "what do I have on X", "search vault", "find in vault", "check my notes", "what did I write about", or ANY time you need background information that might exist in the vault. When in doubt, check the vault — it's fast and prevents redundant work. Also triggers on session start to load standing context.
+description: Search and read the Obsidian vault for relevant context. Use when the user asks "what do I have on X", "search vault", "find in vault", "check my notes", "what did I write about", or when working on a specific project/topic that may have notes in the vault. Do NOT use at the start of every session — only when the task requires detailed vault context beyond what's in Claude Code memory.
 ---
 
 # Obsidian Context Reader
