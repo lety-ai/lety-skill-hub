@@ -155,10 +155,58 @@ If the release branch exists, also include:
 
 If no release branch exists (e.g., merged directly from `develop` → `staging`), skip steps 2–3 and only remind about tagging.
 
-## Step 7 — Report result
+## Step 7 — User-facing release notes (every release)
+
+Besides the technical PR body, every production release gets a **user-facing changelog** that the product owner can publish as-is. Write it in **Spanish** and upload it as a Linear document to the project **RELEASE WHITE LABEL NOTES CHANGE LOGS** (`P-LET-23`, https://linear.app/lety/project/release-white-label-notes-change-logs-8c48cde529fa), titled `Release v<version> — Notas para usuarios`.
+
+Build it from the commits analyzed in Step 2, but verify every claim against the code being released (`origin/release/v<version>` or `staging`): menu labels come from the Spanish locale (`es.json`: `nav.*`, `agentConfig.tabs.*`, …) and availability comes from feature-flag gates (`useFeatureFlag`, `featureFlag:` in the sidebar). Never guess a menu path.
+
+**Three groups:**
+- **Novedades** — something new the user can use.
+- **Mejoras** — something that already existed and now works better.
+- **Arreglos** — something that failed and no longer does.
+
+**Writing rules:**
+- Write every point from the user's side: what they can do now and where they find it. Never how it was built.
+- No technical language: no flag names, iframe, endpoint, HTTP status codes, Embedded Signup, internal provider names (Featurebase, OpenRouter, Composio, Stripe Connect, …) or ticket numbers.
+- Leave out what the user doesn't see: flag changes, syncs of hotfixes already published to production, dependency/framework upgrades, security patches, and internal refactors or repairs.
+- If something is not available to everyone, say so: `Disponible para: agencias con X activado / plan Y`.
+
+**Template for each Novedad or Mejora** (each one carries a screenshot):
+
+```markdown
+### <beneficio en pocas palabras>
+
+**Qué es:** <1 o 2 frases: qué puede hacer ahora el usuario>
+
+**Dónde está:** <ruta en el menú, ej. Agentes › Brief>
+
+**Disponible para:** <todos / solo con X activado>
+
+[Captura: <pantalla › parte a recortar>]
+```
+
+**Arreglos** go in a simple bullet list, with no screenshots.
+
+**Screenshots:** one per point, of the real screen and cropped to the new part only, never the full page. Use sample data, never real customer data. Do not start dev servers or headless browsers to take them. Leave the placeholder `[Captura: Agentes › Brief, copiloto abierto]` and the product owner takes it.
+
+End the document with an internal section, `## Lo que quité y por qué (interno, no publicar)`, that lists each change left out and the reason.
+
+Show the user the draft and ask for approval before uploading it to Linear. Then share the document URL.
+
+After uploading, post a **project update** on the same Linear project (health `onTrack`) with the version, the release date and a link to the document:
+
+```markdown
+**Release v<version>** · <día> de <mes> de <año>
+
+Notas para usuarios: [Release v<version> — Notas para usuarios](<document URL>)
+```
+
+## Step 8 — Report result
 
 Output:
 - The PR URL
+- The Linear URL of the user-facing release notes and of the project update
 - The version released (`<rc-version>` → `<stable-version>`)
 - A one-line summary of what ships to production
 
@@ -173,3 +221,4 @@ Output:
 - **Always use `gh` CLI** for all GitHub operations
 - If `gh` CLI is not authenticated, tell the user to run `! gh auth login`
 - After merge to `master`, always remind the user to tag the release and back-merge the release branch into `develop`
+- **Always** produce the user-facing release notes (Step 7) and upload them to the Linear project `P-LET-23`. Never skip this step, even for small releases
