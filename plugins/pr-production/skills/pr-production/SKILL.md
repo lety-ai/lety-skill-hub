@@ -194,11 +194,19 @@ End the document with an internal section, `## Lo que quité y por qué (interno
 
 Show the user the draft and ask for approval before uploading it to Linear. Then share the document URL.
 
+After uploading, post a **project update** on the same Linear project (health `onTrack`) with the version, the release date and a link to the document:
+
+```markdown
+**Release v<version>** · <día> de <mes> de <año>
+
+Notas para usuarios: [Release v<version> — Notas para usuarios](<document URL>)
+```
+
 ## Step 8 — Report result
 
 Output:
 - The PR URL
-- The Linear URL of the user-facing release notes
+- The Linear URL of the user-facing release notes and of the project update
 - The version released (`<rc-version>` → `<stable-version>`)
 - A one-line summary of what ships to production
 
