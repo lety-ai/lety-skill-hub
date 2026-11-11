@@ -157,7 +157,7 @@ If no release branch exists (e.g., merged directly from `develop` → `staging`)
 
 ## Step 7 — User-facing release notes (every release)
 
-Besides the technical PR body, every production release gets a **user-facing changelog** that the product owner can publish as-is. Write it in **Spanish** and upload it as a Linear document to the project **RELEASE WHITE LABEL NOTES CHANGE LOGS** (`P-LET-23`, https://linear.app/lety/project/release-white-label-notes-change-logs-8c48cde529fa), titled `Release v<version> — Notas para usuarios`.
+Besides the technical PR body, every production release gets a **user-facing changelog** that the product owner can publish as-is. The technical list keeps going out as before (PR body, GitHub Release, staging update); the user version is an addition, never a replacement. Before writing it, read `references/release-notes-example.md`: it is the product owner's own worked example, and the tone, length and structure to imitate. Write it in **Spanish** and upload it as a Linear document to the project **RELEASE WHITE LABEL NOTES CHANGE LOGS** (`P-LET-23`, https://linear.app/lety/project/release-white-label-notes-change-logs-8c48cde529fa), titled `Release v<version> — Notas para usuarios`.
 
 Build it from the commits analyzed in Step 2, but verify every claim against the code being released (`origin/release/v<version>` or `staging`): menu labels come from the Spanish locale (`es.json`: `nav.*`, `agentConfig.tabs.*`, …) and availability comes from feature-flag gates (`useFeatureFlag`, `featureFlag:` in the sidebar). Never guess a menu path.
 
@@ -186,7 +186,7 @@ Build it from the commits analyzed in Step 2, but verify every claim against the
 [Captura: <pantalla › parte a recortar>]
 ```
 
-**Arreglos** go in a simple bullet list, with no screenshots.
+Smaller Mejoras may be a single bullet line instead of the full template, grouped under a short lead line when they share a theme (see the example). **Arreglos** go in a simple bullet list, with no screenshots.
 
 **Screenshots:** one per point, of the real screen and cropped to the new part only, never the full page. Use sample data, never real customer data. Do not start dev servers or headless browsers to take them. Leave the placeholder `[Captura: Agentes › Brief, copiloto abierto]` and the product owner takes it.
 
